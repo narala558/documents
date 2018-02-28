@@ -1,0 +1,13 @@
+- name: check if '{{ item }}' exists
+  stat: path='{{ projects }}/elpy'
+  register: repo
+
+
+- name: clone '{{ item }}'
+  git:
+    repo: 'git@github.com:ChillarAnand/{{ item }}.git'
+    dest: '{{ projects }}/{{ item }}'
+    accept_hostkey: yes
+    key_file: '{{ ssh_key }}'
+  when:
+    repo.stat.path.exists == False

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/emacs
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_IN]=emacs
+Name=emacs
+Comment[en_IN]=start emacs
+Comment=start emacs

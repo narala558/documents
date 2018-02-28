@@ -1,0 +1,24 @@
+| English(en)     | Kannada(kn) | Telugu(te) |
+|-----------------+-------------+------------|
+| approximately   | సుమారు       | ಸುಮಾರು     |
+| place/put       |             | ಹಾಕಿದ್ದಿಯಾ?   |
+| will give       | ఇస్తాను       | ಕೊಡುತ್ತೀನಿ   |
+| no/not          | కాదు         | ಅಲ್ಲ/ಇಲ್ಲ    |
+| congratulations | అభినందనలు    | ಅಭಿನಂದನೆಗಳು  |
+| after           |             | ಹಿ೦ದೆ        |
+| how             |             | ಹೇಗೆ        |
+| why             |             | ಏಕೆ         |
+| where           |             | ಎಲ್ಲಿ        |
+| ours            |             | ನಮ್ಮದು      |
+| festival        |             | ಹಬ್ಬ        |
+| parrot          |             | ಗಿಳಿ         |
+|                 |             |            |
+
+
+
+
+| English(en)            | Kannada(kn)         | Telugu(te)          |
+|------------------------+---------------------+---------------------|
+| whose book is this?    | ఈ పుస్తకం ఎవరిది??     | ಈ ಪುಸ್ತಕವು ಯಾರದು?    |
+| until it finishes, sit | అది అయిపోయినంతవరకు కూర్చో | ಅದು ಮುಗಿಯೋತನಕ ಕೂತುಕೋ |
+| dont tell lies         |                     |                     |

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tb
+# key: tb
+# group: Debug
+# --
+($0){:target="_blank"}

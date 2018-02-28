@@ -1,0 +1,77 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- hosts: all
+
+  become_user: chillaranand
+  become: yes
+  connection: local
+
+
+  vars:
+    list1: [1, 2, 3]
+    list2: [a, b, c, d]
+    region: us-west2
+    home: "{{ lookup('env', 'HOME') }}"
+
+
+  tasks:
+
+  - name: test
+    debug: msg="Values are {{item[0]}} and {{item[1]}}"
+    with_nested:
+      - list1
+
+
+  - name: download keys from github
+    uri:
+      url: "https://github.com/{{ item }}.keys"
+      return_content: yes
+    with_items:
+      - chillaranand
+    register: github_keys
+
+
+  - set_fact:
+      github_name: "{{ item.item }}"
+      github_keys: "{{ lookup('indexed_items', item.content.split('\n')[:-1], wantlist=True) }}"
+    with_items:
+      "{{ github_keys.results }}"
+    register: github_keys_split
+
+
+  # - name: create ec2 keys
+  #   ec2_key:
+  #     name: "{{ item[0].github_name }}_{{ item[1][0] }}"
+  #     key_material: "{{ item[1][1] }}"
+  #     region: "{{ region }}"
+  #   with_subelements:
+  #     - "{{ github_keys_split.results | map(attribute='ansible_facts') | list }}"
+  #     - github_keys
+
+
+  # - name: ensure private key exists
+  #   copy:
+  #     src: "{{ local_ssh_key }}"
+  #     dest: "{{ home }}/.ssh/{{ item }}"
+  #     mode: 0600
+  #   with_items:
+  #     - id_dsa
+  #   become: no
+
+  # - name: delete private key
+  #   file:
+  #     state: absent
+  #     path: "{{ ssh_key }} "
+  #   become: no
+
+
+  - name: whoami
+    command: whoami
+    register: whoami
+
+  - set_fact: user={{ whoami.stdout }}
+
+  - debug: var=whoami
+  - debug: var=whoami.stdout
+  - debug: var=user

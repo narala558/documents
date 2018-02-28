@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: nq
+# key: nq
+# group: Debug
+# --
+# flake8: NOQA

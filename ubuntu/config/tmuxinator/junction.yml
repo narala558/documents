@@ -1,0 +1,39 @@
+# ~/.tmuxinator/junction.yml
+
+name: junction
+root: ~/projects/python/pythonindia/junction/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window:
+
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t mycroft
+
+windows:
+
+  - j:
+      layout: dbdc,149x42,0,0{74x42,0,0[74x21,0,0,25,74x20,0,22,33],74x42,75,0[74x21,75,0,31,74x20,75,22,32]}
+      panes:
+        - workon junction && dr
+        - workon junction && dsp
+        - workon junction
+        - workon junction

@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=chillaranand
+Group=chillaranand
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/chillaranand/projects/invento/mitron/
+ExecStart=/home/chillaranand/.virtualenvs/invento/bin/gunicorn --bind 0.0.0.0:8008 --log-file=- config.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+Restart=on-abort
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

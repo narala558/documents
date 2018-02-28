@@ -1,0 +1,21 @@
+- name: check if '{{ package.name }}' is installed
+  stat: path='/usr/local/bin/{{ package.name }}'
+  register: binary
+
+
+- name: download zip
+  get_url:
+    url='{{ package.url }}'
+    dest='/usr/local/bin/{{ package.name }}'
+    mode=0777
+  when:
+    binary.stat.exists == False
+
+
+- name: unzip
+  get_url:
+    url='{{ package.url }}'
+    dest='/usr/local/bin/{{ package.name }}'
+    mode=0777
+  when:
+    binary.stat.exists == False

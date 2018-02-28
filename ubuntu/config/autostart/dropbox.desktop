@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/local/bin/dropboxd
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_IN]=dropboxd
+Name=Dropbox
+Comment[en_IN]=start dropbox
+Comment=start dropbox

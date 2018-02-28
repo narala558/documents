@@ -1,0 +1,59 @@
+---
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: False
+
+
+  vars:
+    user: ubuntu
+    home: "/home/{{ user }}"
+    venv_home: "{{ home }}/.virtualenvs"
+    venv_bin: "{{ home }}/.virtualenvs/{{ project_name }}/bin"
+    project_name: "avilpage.com"
+    project_root: "{{ home }}/{{ project_name }}"
+    local_project_root: "{{ playbook_dir | dirname }}"
+
+
+  tasks:
+
+    - debug:
+        msg: "{{ local_project_root }}"
+
+
+    - name: rsync project to target host
+      synchronize:
+        src: "{{ local_project_root }}"
+        dest: "{{ home }}"
+
+
+    - name: create virtualenv and install requirements
+      pip:
+        requirements: "{{ project_root }}/requirements/production.txt"
+        virtualenv: "{{ venv_home }}/{{ project_name }}"
+        virtualenv_python: python3.5
+
+
+    - name: migrate django application
+      command:
+        chdir="{{ project_root }}" python3 manage.py migrate
+
+
+    - name: create gunicorn service
+      template:
+        src: mgunicorn.service.j2
+        dest: /etc/systemd/system/mgunicorn.service
+        mode: 0777
+      notify: reload systemctl
+
+
+    - name: reload systemd to reread configs
+      systemd: daemon_reload=yes
+
+
+    - name: restart gunicorn
+      service: name=mgunicorn state=restarted
+
+
+    - name: restart nginx
+      service: name=nginx state=restarted

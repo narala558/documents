@@ -1,0 +1,37 @@
+#! /usr/bin/env ansible-playbook
+
+---
+- hosts: all
+
+  gather_facts: False
+  become_user: pi
+  become: yes
+  connection: local
+
+  vars:
+    user:  "{{ lookup('env', 'USER') }}"
+    home:  "{{ lookup('env', 'HOME') }}"
+
+  pre_tasks:
+
+    - name: update apt cache
+      apt: update_cache=yes cache_valid_time=8640000
+      become: sudo
+
+
+  tasks:
+
+
+    - name: install linux utilities
+      apt: name={{ item }} state=present
+      with_items:
+        - git
+        - htop
+        - openssh-server
+        - tree
+        - vim
+        - network-manager
+
+        - python3-dev
+
+      become: sudo

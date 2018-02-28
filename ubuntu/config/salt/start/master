@@ -1,0 +1,11 @@
+interface: 127.0.0.1
+
+state_output: mixed
+
+file_roots:
+  base:
+    - /home/anand/projects/ubuntu/os/salt/base
+
+pillar_roots:
+  base:
+    - /salt/pillars/base

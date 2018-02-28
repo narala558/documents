@@ -1,0 +1,12 @@
+[Unit]
+Description=dropbox
+
+
+[Service]
+Type=simple
+ExecStart=/home/{{ user }}/.dropbox-dist/dropboxd
+ExecStop=
+
+
+[Install]
+WantedBy=multi-user.target

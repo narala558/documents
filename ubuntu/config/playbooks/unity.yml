@@ -1,0 +1,4 @@
+  - name: install packages from ppa
+    apt: name={{ item }} state=present
+    with_items:
+      - indicator-sysmonitor

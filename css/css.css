@@ -1,0 +1,62 @@
+/* basic styles */
+
+
+div {
+
+    max-width: 700px;
+
+    padding: 10px 20px 30px 40px; /* top left bottom right */
+
+    opacity: 0.5; /* default: 1 */
+
+    display: inline-block;     /* default: inline; */
+
+/*
+Inline Elements:
+- Respect left & right margins and padding, but not top & bottom
+- Cannot have a width and height set
+- Allow other elements to sit to their left and right.
+
+Block Elements:
+- respect all of those
+- force a line break after the block element
+
+Inline-Block Elements:
+- allow other elements to sit to their left and right
+- Respect top & bottom margins and padding
+- Respect height and width
+*/
+
+}
+
+
+div::after {
+    content: " - Remember this";
+}
+
+
+
+
+
+
+/* bootstrap */
+
+
+/* navbar fixed top overlapping site */
+body {
+    padding-top: 70px;
+}
+
+
+/* flush nav bar to bottom */
+<div class="navbar navbar-fixed-bottom"></div>
+
+
+/* change navbar color */
+.navbar-default {
+    background-color: #F8F8F8;
+}
+
+.navbar-inverse {
+    background-color: #F8F8F8;
+}

@@ -1,0 +1,39 @@
+# ~/.tmuxinator/mycroft.yml
+
+name: mycroft
+root: ~/projects/appknox/mycroft/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t mycroft
+
+windows:
+  - process:
+      layout: dd9c,149x42,0,0{74x42,0,0[74x21,0,0,19,74x20,0,22,33],74x42,75,0[74x21,75,0,31,74x20,75,22,32]}
+      panes:
+        - wo mycroft && ./scripts/start_server.sh
+        - wo mycroft && dsp
+        - wo mycroft && dn
+        - cd ../irene && . ~/ENV/appknox/irene/bin/activate && ember serve
+
+  - shell: ls

@@ -1,0 +1,313 @@
+#! /usr/bin/env ansible-playbook
+
+---
+- hosts: all
+
+  gather_facts: False
+  become_user: root
+  become: yes
+  connection: local
+
+  vars:
+    user:  "{{ lookup('env', 'USER') }}"
+    home:  "{{ lookup('env', 'HOME') }}"
+    # config_dir: "{{ lookup('env', 'CONFIG_DIR') }}"
+    config_dir: "{{ home }}/projects/eddie"
+    ubuntu_config:  '{{ config_dir }}/ubuntu/config'
+    postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+    links:
+      - { src: '{{ ubuntu_config }}/zsh/zshrc.sh', dest: '{{ home }}/.zshrc' }
+      - { src: '{{ ubuntu_config }}/tmuxinator', dest: '{{ home }}/.tmuxinator' }
+      - { src: '{{ config_dir }}/python/ipython_config.py', dest: '{{ home }}/.ipython/profile_default/ipython_config.py'}
+
+
+  pre_tasks:
+
+    # - name: Add third party PPAs
+    #   apt_repository: repo={{ item }} state=present
+    #   with_items:
+    #     - ppa:synapse-core/ppa
+    #     - ppa:nathan-renniewaldock/flux
+
+    - name: update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+
+
+  tasks:
+
+
+    - name: install linux utilities
+      apt: name={{ item }} state=present
+      with_items:
+        - apache2-utils
+        - arpon
+        - autoconf
+        - automake
+        - build-essential
+        - clipit
+        - cowsay
+        - dconf-tools
+        - git
+        - htop
+        - iotop
+        - nethogs
+        - nmap
+        - openssh-server
+        - pastebinit
+        - tmuxinator
+        - tree
+        - unzip
+        - vim
+        - xcape
+        - network-manager
+        - ffmpeg
+
+
+    - name: install android utilities
+      apt: name={{ item }} state=present
+      with_items:
+        - android-tools-adb
+        - android-tools-fastboot
+
+
+    - name: install java utilities
+      apt: name={{ item }} state=present
+      with_items:
+        - maven
+
+
+    - name: install development packages
+      apt: name={{ item }} state=present
+      with_items:
+        - libbluetooth-dev
+
+
+    - name: install standard packages
+      apt: name={{ item }} state=present
+      with_items:
+        - calibre
+        - clementine
+        - rabbitmq-server
+        - redis-server
+        - tesseract-ocr
+        - fonts-telu
+
+
+    - name: install pandoc and latex
+      apt: name={{ item }} state=present
+      with_items:
+        - pandoc
+        - texlive-full
+        - texlive-latex-base
+        - texlive-latex-recommended
+        - texlive-fonts-recommended
+
+
+    - name: install python dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - python-dev
+        - python-pip
+        - python-tk
+
+        - python3-dev
+        - python3-tk
+
+        # required when compiling python from source
+        - libsqlite3-dev
+        - libbz2-dev
+
+
+    - name: setup pypirc
+      file:
+        state: link
+        src: '{{ home }}/Dropbox/tech/pypirc'
+        dest: '{{ home }}/.pypirc'
+
+
+    # - name: install global python packages
+    #   command: pip install -r "{{ ubuntu_config }}/global-requirements.txt"
+
+    - name: install postgres and its dependencies
+      apt: name="{{ item }}" state=present
+      with_items:
+        - postgresql
+        - python-psycopg2
+        - libpq-dev
+
+
+    - name: create postgres user
+      postgresql_user:
+        name: "{{ user }}"
+        password: "{{ postgres_password }}"
+      become_user: postgres
+
+
+    - name: create database
+      postgresql_db:
+        name: "{{ user }}"
+        owner: "{{ user }}"
+      become_user: postgres
+
+
+    - block:
+      - name: install pillow dependencies
+        apt: name={{ item }} state=present
+        with_items:
+          - libjpeg8-dev
+          - libjpeg-dev
+        become_user: root
+
+
+    # - name: create virtualenv and install requirements
+    #   pip:
+    #     requirements: "{{ config_dir }}/ubuntu/config/requirements.txt"
+    #     virtualenv: "{{ venv_dir }}/py35"
+    #     virtualenv_python: python3.5
+
+    # - block:
+
+    #   - name: check if heroku installed
+    #     stat: path=/usr/local/bin/heroku
+    #     register: heroku
+
+    #   - name: download heroku
+    #     get_url:
+    #       url=https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz
+    #       dest=/tmp/heroku-linux-amd64.tar.gz
+    #     when:
+    #       heroku.stat.exists == False
+
+    #   - unarchive:
+    #       src: /tmp/heroku-linux-amd64.tar.gz
+    #       dest: /usr/local/lib/
+    #     when:
+    #       heroku.stat.exists == False
+
+    #   - name: create heroku link
+    #     file:
+    #       src: /usr/local/lib/heroku/bin/heroku
+    #       dest: /usr/local/bin/heroku
+    #       state: link
+    #     when:
+    #       heroku.stat.exists == False
+
+    # - block:
+    #   - name: check if gcloud is installed
+    #     stat: path=/usr/bin/gcloud
+    #     register: gcloud
+    #   - name: Install gcloud
+    #     apt: name=google-cloud-sdk state=present
+    #     when:
+    #       gcloud.stat.exists == False
+
+    # - name: clone github repos
+    #   include: git_clone.yml package="{{ item }}"
+    #   with_items:
+    #     - elpy
+    #     - avilpage.com
+    #     - django
+    #     - importmagic
+
+
+   # - name: Install docker
+   #    command: curl -sSL https://get.docker.com/ | sudo bash
+   # - name: Give permissions
+   #    command: usermod -aG docker $(whoami)
+
+    # - git: repo=git://foosball.example.org/path/to/repo.git
+           # dest: /home/chillaranand/.qfc
+
+# automate
+# byobu profile
+# ctrl - v paste
+# git config
+
+      # - compizconfig-settings-manager
+      # - compiz-plugins-extra
+      # - unity-tweak-tool
+      # - npm
+      # - synapse
+
+    # - name: install watchman
+    #   command: sudo npm install -g watchman
+
+    # - name: mysql-python dependencies
+    #   apt: name=libmysqlclient-dev state=present
+
+
+    - name: remove symlinks
+      file:
+        state: absent
+        path: '{{ item.dest }}'
+      with_items: '{{ links }}'
+
+    - name: create symlinks for files
+      file:
+        state: link
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+      with_items: '{{ links }}'
+
+    # - name: create startup service
+    #   template:
+    #     src: '../templates/{{ item }}.service.j2'
+    #     dest: '/etc/systemd/system/{{ item }}.service'
+    #     mode: 0777
+    #   notify: reload systemctl
+    #   with_items:
+    #     - dropbox
+    #   become_user: root
+
+
+    - name: disable error reporting
+      lineinfile:
+        dest: /etc/default/apport
+        regexp: '^enabled='
+        line: 'enabled=0'
+      become_user: root
+
+    - name: enable sar
+      lineinfile:
+        dest: /etc/default/sysstat
+        regexp: '^ENABLED'
+        line: 'ENABLED="true"'
+
+    - name: increase history size
+      lineinfile:
+        dest: /etc/default/sysstat
+        regexp: '^HISTORY'
+        line: 'HISTORY=365'
+
+
+    - name: install packages from binaries
+      include: binary_install.yml package="{{ item }}"
+      with_items:
+        - {name: 'certbot-auto', url: 'https://dl.eff.org/certbot-auto'}
+
+
+    - name: install pyenv
+      include: script_install.yml package="{{ item }}"
+      with_items:
+        - {name: 'pyenv', url: 'https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer'}
+
+
+    - name: kubernetes setup
+      include: binary_install.yml package="{{ item }}"
+      with_items:
+        - {name: 'kubectl',      url: 'https://storage.googleapis.com/kubernetes-release/release/v1.5.1/bin/linux/amd64/kubectl'}
+        - {name: 'minio',        url: 'https://dl.minio.io/server/minio/release/linux-amd64/minio'}
+        - {name: 'mc',           url: 'https://dl.minio.io/client/mc/release/linux-amd64/mc'}
+        - {name: 'minikube',     url: 'https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64'}
+        - {name: 'kubetail',     url: 'https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail'}
+
+
+
+    - name: install heroku cli via snap
+      command: snap install heroku --classic
+
+
+  handlers:
+    - name: reload systemctl
+      command: systemctl daemon-reload
+      become: yes

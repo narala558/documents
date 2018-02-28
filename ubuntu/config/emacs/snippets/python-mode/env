@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: env
+# key: env
+# group: Debug
+# --
+os.environ.get($0, None)

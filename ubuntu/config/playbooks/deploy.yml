@@ -1,0 +1,58 @@
+---
+- hosts: all
+  remote_user: chillaranand
+  become_method: sudo
+  become: yes
+
+  vars:
+    home: /home/chillaranand
+    app_root: "{{ home }}/avilpage"
+
+    server_name: avilpage.com
+
+
+  tasks:
+
+    - name: add nginx ppa
+      apt_repository: repo="ppa:nginx/stable" state=present
+      become: yes
+
+    - name: install apt packages
+      apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
+      with_items:
+        - nginx
+        - postgresql-9.5
+        - postgresql-client-9.5
+        - postgresql-contrib-9.5
+        - postgresql-server-dev-9.5
+        - python-virtualenv
+        - python-psycopg2
+        - python3.5
+        - python3.5-dev
+        - swig
+
+    - name: create nginx config
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: restart nginx
+
+    - name: create virtualenv and install requirements
+      pip:
+        requirements: "{{ app_root }}/requirements.txt"
+        virtualenv: "{{ home }}.virtualenvs"
+        virtualenv_python: python3.5
+
+    - name: ensure tls certificates are present
+      copy: src=../{{ item.src }} dest=/etc/ssl/{{ item.dest }}
+      with_items:
+        - { src: avilpage_com.crt, dest: cert.crt }
+        - { src: avilpage_com.pem, dest: cert.pem }
+
+
+
+  handlers:
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+      become: yes

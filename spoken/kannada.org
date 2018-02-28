@@ -1,0 +1,74 @@
+**** questions
+
+| english | kenglish | pronounciation | kannada |
+|---------+----------+----------------+---------|
+| how     | hege     |                | ಹೇಗೆ     |
+| why     | yake     |                | ಏಕೆ      |
+| where   | yelli    |                | ಎಲ್ಲಿ     |
+| when    | yaavaaga | yāvāga         | ಯಾವಾಗ   |
+| what    | yenu     | Ēnu               | ಏನು     |
+| who     | yaaru    | yāru           | ಯಾರು    |
+|         |          |                |         |
+
+
+
+* words
+
+| english         | kenglish      | kannada   |
+|-----------------+---------------+-----------|
+| approximately   | sumaaru       | ಸುಮಾರು    |
+| placed?         | haakidhiya?   | ಹಾಕಿದ್ದಿಯಾ?  |
+| will give       | koduthini     | ಕೊಡುತ್ತೀನಿ  |
+| no              | illa          | ಇಲ್ಲ       |
+| not             | alla          | ಅಲ್ಲ       |
+| congratulations | abhinandagalu | ಅಭಿನಂದನೆಗಳು |
+| after           | hinde         | ಹಿ೦ದೆ       |
+| ours            | nammadu       | ನಮ್ಮದು     |
+| festival        | habba         | ಹಬ್ಬ       |
+| parrot          | gili          | ಗಿಳಿ        |
+| nope/don't need | beda          | ಬೇಡ       |
+| waste           | kachada       | ಕಚಡ       |
+|                 |               |           |
+
+
+
+* sentences
+
+| english                | kenglish                     |                         | kannada             |
+|------------------------+------------------------------+-------------------------+---------------------|
+| whose book is this?    |                              |                         | ಈ ಪುಸ್ತಕವು ಯಾರದು?    |
+| until it finishes, sit |                              |                         | ಅದು ಮುಗಿಯೋತನಕ ಕೂತುಕೋ |
+| dont tell lies         |                              |                         |                     |
+| come, lets go for tea  | tea ge hogona, banni         | ṭī ge hōgōṇa, banni     | ಟೀ ಗೆ ಹೋಗೋಣ, ಬನ್ನಿ     |
+| my sister is studying  | nanna tangi oduththidhdhalhe | nanna taṅgi ōduttiddāḷe | ನನ್ನ ತಂಗಿ ಓದುತ್ತಿದ್ದಾಳೆ   |
+| its closed             | adu muchchithu               | adu muccitu             | ಅದು ಮುಚ್ಚಿತು          |
+
+
+
+* Guest Converstation
+
+| english            | kenglish           | phonetics          | kannada       |
+|--------------------+--------------------+--------------------+---------------|
+| What is your name? | nimma hesaru yenu? | Nim'ma hesaru ēnu? | ನಿಮ್ಮ ಹೆಸರು ಏನು? |
+| sit                | koothuko           | kūtukō             | ಕೂತುಕೋ        |
+| Come in            | olhage banni       | oḷage banni        | ಒಳಗೆ ಬನ್ನಿ       |
+
+
+
+* Library Converstation
+
+| english           | kenglish                | phonetics                | kannada              |
+|-------------------+-------------------------+--------------------------+----------------------|
+| I went to library | nanu librarikke hogidde | nānu laibrarikke hōgidde | ನಾನು ಲೈಬ್ರರಿಕ್ಕೆ   ಹೋಗಿದ್ದೆ |
+
+
+
+
+
+
+
+* slang
+
+| kannada | kenglish | literal meaning | actual meaning                     |
+|---------+----------+-----------------+------------------------------------|
+| ಹೊಗೆ     | hoge     | smoke           | screwed; get in a big problem; die |

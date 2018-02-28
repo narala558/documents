@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/byobu
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_IN]=byobu
+Name=byobu
+Comment[en_IN]=start byobu
+Comment=start byobu

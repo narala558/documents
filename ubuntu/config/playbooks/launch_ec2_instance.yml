@@ -1,0 +1,84 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: launch ec2 instance
+
+  hosts: localhost
+
+  vars:
+    region: us-east-1
+    instance_type: t2.micro
+    count: 1
+
+    ssh_users:
+      - chillaranand
+
+  tasks:
+
+  - name: download keys from github
+    get_url:
+      url: "https://github.com/{{ item }}.keys"
+      dest: "/tmp/{{ item }}"
+    with_items: ssh_users
+
+  - name: create ec2 keys - chillaranand
+    ec2_key: name=chillaranand key_material="{{ item }}" region={{ region }}
+    with_file: /tmp/chillaranand
+
+  - name: create web security group
+    ec2_group:
+      name: web
+      description: allow http and https access
+      region: "{{ region }}"
+      rules:
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 443
+          to_port: 443
+          cidr_ip: 0.0.0.0/0
+
+  - name: ssh security group
+    ec2_group:
+      name: ssh
+      description: allow ssh access
+      region: "{{ region }}"
+      rules:
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+
+  - name: outbound security group
+    ec2_group:
+      name: outbound
+      description: allow outbound connections to the internet
+      region: "{{ region }}"
+      rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0
+
+  - name: start the instance
+    ec2:
+      region: "{{ region }}"
+      image: ami-6edd3078
+      instance_type: "{{ instance_type }}"
+      key_name: chillaranand
+      group: [web, ssh, outbound]
+      instance_tags: { Name: avilpage, type: web, env: production }
+      exact_count: "{{ count }}"
+      count_tag: { type: web }
+      wait: yes
+    register: ec2
+
+  - name: add the instance to web and production groups
+    add_host: hostname={{ item.public_dns_name }} groups=web,production
+    with_items: ec2.tagged_instances
+    when: item.public_dns_name is defined
+
+  - name: wait for ssh server to be running
+    wait_for: host={{ item.public_dns_name }} port=22 search_regex=OpenSSH
+    with_items: ec2.tagged_instances
+    when: item.public_dns_name is defined
